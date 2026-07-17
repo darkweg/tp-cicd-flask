@@ -50,3 +50,20 @@ jobs:
 
       - name: Analyse SAST du code
         run: bandit -r app/ -ll
+
+  scan-dependances:
+    name: Scan des dépendances (pip-audit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Installer pip-audit
+        run: pip install pip-audit
+
+      - name: Auditer les dépendances
+        run: pip-audit -r requirements.txt
