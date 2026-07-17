@@ -2,7 +2,6 @@
 
 from flask import Flask, jsonify, request
 
-
 app = Flask(__name__)
 
 # Base de données "en mémoire" pour simplifier le TP
