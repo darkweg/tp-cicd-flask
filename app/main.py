@@ -1,8 +1,7 @@
 """Petite API de gestion de tâches (Flask) pour le TP CI/CD."""
 
 from flask import Flask, jsonify, request
-import subprocess
-subprocess.call("ls", shell=True)   # Bandit will flag shell=True
+
 
 app = Flask(__name__)
 
