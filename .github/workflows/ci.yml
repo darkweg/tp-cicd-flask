@@ -80,3 +80,20 @@ jobs:
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  build-et-scan-image:
+    name: Build & Scan image (Trivy)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Construire l'image Docker
+        run: docker build -t tp-cicd-flask:ci .
+
+      - name: Scanner l'image avec Trivy
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: tp-cicd-flask:ci
+          format: table
+          exit-code: "1"             # fait échouer le job si une faille est trouvée
+          ignore-unfixed: true       # ignore les CVE sans correctif disponible
+          severity: HIGH,CRITICAL    # n'échoue que sur les failles graves
